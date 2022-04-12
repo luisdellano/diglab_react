@@ -13,23 +13,19 @@ export const Wrapper = styled.div<Props>`
     justify-content: center;
     background-color: ${(props) => {
         switch (props.signal) {
-            case '01':
-                return 'green';
-                break;
-            case '10':
-                return 'yellow';
-                break;
             case '11':
+                return 'green';
+            case '01':
+                return 'yellow';
+            case '10':
                 return 'red';
-                break;
             default:
                 return 'blue';
-                break;
         }
     }};
 
     > p {
-        font-size: 1.4rem;
-        color: black;
+        font-size: 3.6rem;
+        color: white;
     }
 `;

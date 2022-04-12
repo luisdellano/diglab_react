@@ -20,7 +20,6 @@ const MQTTContext = createContext<MQTTContextData>({} as MQTTContextData);
 
 export const MQTTProvider: React.FC = ({ children }) => {
     const [client, setClient] = useState(null as unknown as MqttClient);
-    const [isSubed, setIsSub] = useState(false);
     const [payload, setPayload] = useState('');
     const [s0, setS0] = useState('0');
     const [s1, setS1] = useState('0');
@@ -62,8 +61,7 @@ export const MQTTProvider: React.FC = ({ children }) => {
                 setConnectStatus('Reconnecting');
             });
             client.on('message', (topic, message) => {
-                setPayload(message.toString());
-                console.log(topic);
+                // console.log(topic);
                 switch (topic) {
                     case 'grupo2-bancadaA3/S0':
                         setS0(message.toString());
@@ -80,13 +78,13 @@ export const MQTTProvider: React.FC = ({ children }) => {
                     case 'grupo2-bancadaA3/S4':
                         setS4(message.toString());
                         break;
-                    case 'grupo2-bancadaA3/S5':
-                        setS5(message.toString());
+                    case 'grupo2-bancadaA3/E1':
+                        setPayload(message.toString());
                         break;
                     default:
                         break;
                 }
-                console.log(message.toString());
+                // console.log(message.toString());
             });
         }
     }, [client]);

@@ -14,14 +14,9 @@ const HomeTemplate = () => {
         s2,
         s3,
         s4,
-        s5,
         client
     } = useMQTT();
     const [letters, setLetters] = useState([] as string[]);
-
-    function timeout(delay: number) {
-        return new Promise((res) => setTimeout(res, delay));
-    }
 
     useEffect(() => {
         setLetters(payload.split(''));
@@ -51,30 +46,45 @@ const HomeTemplate = () => {
     const [rgb3, setRgb3] = useState('00');
     const [rgb4, setRgb4] = useState('00');
 
-    useEffect(() => {
-        if (s5 === '1') {
-            switch (s2 + s1 + s0) {
-                case '000':
-                    setRgb0(s4 + s3);
-                    break;
-                case '001':
-                    setRgb1(s4 + s3);
-                    break;
-                case '010':
-                    setRgb2(s4 + s3);
-                    break;
-                case '011':
-                    setRgb3(s4 + s3);
-                    break;
-                case '100':
-                    setRgb4(s4 + s3);
-                    break;
+    const [start, setStart] = useState(false);
 
-                default:
+    useEffect(() => {
+        console.log('COMECANDO UMA LETRA:  ');
+        console.log('pos: ', s2 + s1 + s0);
+        switch (s2 + s1 + s0) {
+            case '000':
+                setStart(true);
+                if (start) {
+                    setRgb0(s4 + s3);
+                } else {
                     break;
-            }
+                }
+                break;
+            case '001':
+                console.log('cores: ', s4 + s3);
+                setRgb1(s4 + s3);
+
+                break;
+            case '010':
+                console.log('cores: ', s4 + s3);
+                setRgb2(s4 + s3);
+
+                break;
+            case '011':
+                console.log('cores: ', s4 + s3);
+                setRgb3(s4 + s3);
+
+                break;
+            case '100':
+                console.log('cores: ', s4 + s3);
+                setRgb4(s4 + s3);
+                setStart(false);
+                console.log('Terminou');
+                break;
+            default:
+                break;
         }
-    }, [s5]);
+    }, [s0, s1, s2, s3, s4]);
 
     return (
         <S.Container>
